@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        {{> include/header }}
+
+        <script>
+            function confirmDelete(id) {
+                if (id == 1) {
+                    alert("관리자 정보는 삭제할 수 없습니다.");
+                } else if (confirm("선택된 사용자 정보를 삭제 합니다. 계속합니까?")) {
+                    // 확인 버튼 클릭 시 동작
+                    window.location="/admin/"+id+"/delete";
+                }
+            }
+
+            function editUser(id) {
+                if (id == 1) {
+                    alert("관리자 정보는 수정할 수 없습니다.");
+                } else {
+                    window.location="/users/"+id+"/form";
+                }
+            }
+        </script>
+
+    </head>
+    <body>
+
+        {{> include/navbar }}
+
+        <div class="container-fluid" align="center">
+            <div class="container" style="margin: 117px 15px 80px;">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Index</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Mobile</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#owner}}
+                    <tr>
+                        <td>{{id}}</td>
+                        <td>{{name}}</td>
+                        <td>{{email}}</td>
+                        <td>{{mobile}}</td>
+                        <td><a class="btn btn-info" href="#" role="button" onclick="editUser({{id}})">Edit</a></td>
+                        <td><a class="btn btn-danger" href="#" role="button" onclick="confirmDelete({{id}})">Delete</a></td>
+                    </tr>
+                    {{/owner}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {{> include/stickyFooter}}
+        {{> include/footer}}
+
+    </body>
+</html>

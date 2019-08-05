@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        {{> include/header }}
+
+        <script>
+            function check_pass() {
+                if (document.getElementById('inputPassword').value == document.getElementById('confirmPassword').value) {
+                    document.getElementById('message').style.color = 'green';
+                    document.getElementById('message').innerHTML = 'matching';
+                    document.getElementById('submit').disabled = false;
+                } else {
+                    document.getElementById('message').style.color = 'red';
+                    document.getElementById('message').innerHTML = 'not matching';
+                    document.getElementById('submit').disabled = true;
+                }
+            }
+
+            function getLilacTVChecked() {
+                var checkBox = document.getElementById("isLilacTVChecked");
+                if (checkBox.checked == true) {
+                    productID.style.display = "block";
+                    document.getElementById('whereID').style.color = 'darkgray';
+                    document.getElementById('whereID').innerHTML = '라일락TV의 [설정]메뉴 > 서브메뉴(왼쪽메뉴) > [제품정보]에서 확인가능';
+                    whereID.style.display = "block";
+                }
+                else {
+                    productID.style.display = "none";
+                    whereID.style.display = "none";
+                }
+            }
+
+        </script>
+
+        <style>
+            #bj {
+                padding-top: 100px;
+                margin-bottom: 80px;
+            }
+        </style>
+
+    </head>
+    <body>
+
+        {{> include/navbar }}
+
+        <div id="bj" class="container">
+            <div class="card card-register mx-auto mt-5" style="width: 20rem;">
+                {{#errorMsg}}
+                <div class="card-header" style="background: #cc6b80; color: #ffffff">{{errorMsg}}</div>
+                {{/errorMsg}}
+                {{^errorMsg}}
+                <div class="card-header">회원등록</div>
+                {{/errorMsg}}
+                <div class="card-body">
+                    <form action="/users/register" method="post">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="namebar" style="width: 80px">이름</span>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                                   name="name" placeholder="이름을 입력하세요." required="required" autofocus="autofocus">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="emailbar" style="width: 80px">이메일</span>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                                   name="email" placeholder="이메일주소를 입력하세요." required="required">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="phonebar" style="width: 80px">모바일</span>
+                            </div>
+                            <input type="tel" pattern="[0-9]{4}[0-9]{3}[0-9]{3}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                                   name="mobile" placeholder="전화번호를 입력하세요." required="required">
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="isLilacTVChecked" onclick="getLilacTVChecked()">
+                            <label class="form-check-label" for="isLilacTVChecked">라일락TV를 사용중 입니다.</label>
+                        </div>
+                        <span id='whereID' style="font-size: 12px; display:none"></span>
+                        <div class="input-group mb-3">
+                            <input type="text" pattern="[a-f0-9]{14}" id="productID" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                                   name="lilactvID" placeholder="제품ID" style="display:none">
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <input type="password" id="inputPassword" name="pass" class="form-control" required="required">
+                                        <label for="inputPassword">비밀번호</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <input type="password" id="confirmPassword" name="cpass" class="form-control" required="required" onfocusout='check_pass()'>
+                                        <label for="confirmPassword">비밀번호 확인</label>
+                                        <span id='message'></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block" id="submit" disabled>등록</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {{ > include/stickyFooter}}
+        {{ > include/footer }}
+
+    </body>
+</html>
